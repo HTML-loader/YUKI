@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>YUKI</title>
+<style>
+:root{--bg:#08090d;--panel:#12141b;--line:#282b35;--text:#f5f5f8;--muted:#989ba7;--accent:#d7a5ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{min-height:100vh;padding-bottom:125px;background:radial-gradient(circle at 90% 0,#30234d55,transparent 32%)}
+header{position:sticky;top:0;z-index:10;padding:17px 18px 14px;background:#08090dcc;backdrop-filter:blur(20px);border-bottom:1px solid #ffffff09}
+.top{display:flex;justify-content:space-between;align-items:center}.logo{font-size:26px;font-weight:900;letter-spacing:-1.7px}.logo i{color:var(--accent);font-style:normal}
+.avatar{width:37px;height:37px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#292c3b,#15161d);font-weight:800}
+.search{width:100%;height:45px;margin-top:14px;border:0;border-radius:13px;background:#171922;color:white;padding:0 15px;outline:0}.search::placeholder{color:#777b88}
+main{max-width:920px;margin:auto;padding:22px 18px}.view{display:none}.view.active{display:block}
+.greeting{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.8px}h1{margin:4px 0 19px;font-size:29px;letter-spacing:-1px}
+.hero{padding:20px;border-radius:20px;min-height:185px;background:linear-gradient(135deg,#28203a,#151720 65%);border:1px solid #ffffff10;overflow:hidden}
+.hero small{color:#c6a7dc;font-weight:900;letter-spacing:1.2px}.hero h2{font-size:27px;line-height:1.03;letter-spacing:-1px;max-width:280px;margin:9px 0 7px}.hero p{color:#a9acb7;font-size:13px;line-height:1.45;max-width:300px;margin:0}
+.hero button{margin-top:16px;border:0;border-radius:99px;padding:10px 17px;font-weight:900;background:#f4f1f6;color:#111}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head button{border:0;background:none;color:var(--muted);font-size:11px;font-weight:800}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick-card{min-height:69px;border:1px solid var(--line);border-radius:13px;background:var(--panel);display:flex;align-items:center;gap:10px;padding:10px;cursor:pointer}.quick-art{width:48px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,#30334d,#171925);font-size:20px}.quick-card strong{font-size:12px;display:block}.quick-card span{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.row{display:flex;gap:14px;overflow:auto;scrollbar-width:none;padding-bottom:6px}.row::-webkit-scrollbar{display:none}.album{min-width:142px;cursor:pointer}.art,.song-art,.player-art{display:grid;place-items:center;position:relative;overflow:hidden}.art{aspect-ratio:1;border-radius:15px;font-size:37px;margin-bottom:9px}.song-art{width:49px;height:49px;border-radius:9px;flex:none}.album strong{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.album span{font-size:11px;color:var(--muted);display:block;margin-top:4px}
+.a1{background:linear-gradient(135deg,#292a55,#8d6ec1)}.a2{background:linear-gradient(135deg,#172f35,#73989c)}.a3{background:linear-gradient(135deg,#342122,#b8746e)}.a4{background:linear-gradient(135deg,#222b1e,#84906b)}.a5{background:linear-gradient(135deg,#271b38,#7b5c9e)}.a6{background:linear-gradient(135deg,#25272b,#a6a6a0)}
+.song-list{display:flex;flex-direction:column}.song{display:flex;align-items:center;gap:12px;padding:10px 3px;border-bottom:1px solid #ffffff0d;cursor:pointer}.song-info{min-width:0;flex:1}.song-info strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.song-info span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.more{color:#7d808b;font-size:20px;padding:6px}
+.player{position:fixed;left:10px;right:10px;bottom:70px;z-index:20;padding:10px 12px;border:1px solid #2b2e38;border-radius:17px;background:#13141bf2;backdrop-filter:blur(22px);box-shadow:0 14px 40px #0008}.player-top{display:flex;align-items:center;gap:10px}.player-art{width:43px;height:43px;border-radius:9px;flex:none}.player-info{min-width:0;flex:1}.player-info strong{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-info span{font-size:10px;color:var(--muted)}.controls{display:flex;gap:5px;align-items:center}.control{border:0;background:none;width:31px;height:31px;border-radius:50%;font-size:14px}.play{background:#f3f1f5;color:#111;width:36px;height:36px}.progress{height:3px;background:#383a44;border-radius:10px;margin-top:8px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#eee}
+nav{position:fixed;bottom:0;left:0;right:0;height:70px;z-index:19;display:flex;justify-content:space-around;background:#090a0ef2;backdrop-filter:blur(20px);border-top:1px solid #ffffff0d}.nav{border:0;background:none;color:#777b88;font-size:10px;font-weight:800}.nav b{display:block;font-size:21px;line-height:27px;font-weight:500}.nav.active{color:white}
+.empty{text-align:center;color:var(--muted);padding:45px 20px;font-size:13px}.toast{position:fixed;left:50%;bottom:145px;z-index:50;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#f1eef5;color:#111;padding:10px 15px;border-radius:99px;font-size:12px;font-weight:900;transition:.22s}.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="top"><div class="logo">YU<i>K</i>I</div><div class="avatar">Y</div></div><input id="search" class="search" placeholder="What do you want to listen to?" autocomplete="off"></header>
+<main>
+<section id="home" class="view active">
+<div class="greeting">GOOD EVENING</div><h1>Welcome back.</h1>
+<div class="hero"><small>YUKI MIX</small><h2>Music for doing absolutely anything.</h2><p>A carefully assembled collection of songs you definitely could play right now.</p><button onclick="fakePlay('Your YUKI Mix')">▶ Play</button></div>
+<div class="section-head"><h2>Quick picks</h2></div>
+<div class="quick">
+<div class="quick-card" onclick="fakePlay('Liked Songs')"><div class="quick-art">♥</div><div><strong>Liked Songs</strong><span>24 songs</span></div></div>
+<div class="quick-card" onclick="fakePlay('Daily Mix')"><div class="quick-art">◉</div><div><strong>Daily Mix</strong><span>Made for you</span></div></div>
+<div class="quick-card" onclick="fakePlay('Recently Played')"><div class="quick-art">↺</div><div><strong>Recently Played</strong><span>Pick up where you left off</span></div></div>
+<div class="quick-card" onclick="fakePlay('Discover Weekly')"><div class="quick-art">✦</div><div><strong>Discover Weekly</strong><span>Fresh every week</span></div></div>
+</div>
+<div class="section-head"><h2>Made for you</h2><button>SEE ALL</button></div>
+<div class="row">
+<div class="album" onclick="fakePlay('Midnight Bloom')"><div class="art a1">☾</div><strong>Midnight Bloom</strong><span>YUKI Mix • 2026</span></div>
+<div class="album" onclick="fakePlay('Neon Weather')"><div class="art a2">☁</div><strong>Neon Weather</strong><span>Dream pop & more</span></div>
+<div class="album" onclick="fakePlay('After School')"><div class="art a3">✦</div><strong>After School</strong><span>For your afternoon</span></div>
+<div class="album" onclick="fakePlay('Soft Static')"><div class="art a4">〰</div><strong>Soft Static</strong><span>Low-key favorites</span></div>
+</div>
+<div class="section-head"><h2>Recently played</h2></div>
+<div class="song-list">
+<div class="song" onclick="fakePlay('Paper Moon')"><div class="song-art a5">☾</div><div class="song-info"><strong>Paper Moon</strong><span>Velvet Arcade</span></div><div class="more">•••</div></div>
+<div class="song" onclick="fakePlay('Static Hearts')"><div class="song-art a2">✧</div><div class="song-info"><strong>Static Hearts</strong><span>Nova Lane</span></div><div class="more">•••</div></div>
+<div class="song" onclick="fakePlay('Cloud Nine')"><div class="song-art a6">☁</div><div class="song-info"><strong>Cloud Nine</strong><span>June & The Satellites</span></div><div class="more">•••</div></div>
+<div class="song" onclick="fakePlay('2:17 AM')"><div class="song-art a3">✦</div><div class="song-info"><strong>2:17 AM</strong><span>Silver Hours</span></div><div class="more">•••</div></div>
+</div>
+</section>
+<section id="searchView" class="view"><div class="greeting">SEARCH</div><h1>Find something.</h1><div id="results"></div><div id="empty" class="empty">Start typing to search YUKI.</div></section>
+<section id="library" class="view"><div class="greeting">YOUR LIBRARY</div><h1>Your Library</h1><div class="hero"><small>YOUR COLLECTION</small><h2>Everything you pretend you're going to listen to.</h2><p>Albums, playlists and songs — all safely stored in this extremely legitimate music app.</p></div><div class="section-head"><h2>Playlists</h2></div><div class="song-list">
+<div class="song" onclick="fakePlay('My Playlist')"><div class="song-art a1">♫</div><div class="song-info"><strong>My Playlist</strong><span>18 songs</span></div><div class="more">•••</div></div>
+<div class="song" onclick="fakePlay('Favorites')"><div class="song-art a3">♥</div><div class="song-info"><strong>Favorites</strong><span>32 songs</span></div><div class="more">•••</div></div>
+<div class="song" onclick="fakePlay('Late Night')"><div class="song-art a5">☾</div><div class="song-info"><strong>Late Night</strong><span>41 songs</span></div><div class="more">•••</div></div>
+</div></section>
+</main>
+<div class="player"><div class="player-top"><div id="playerArt" class="player-art a1">☾</div><div class="player-info"><strong id="playerSong">Nothing playing</strong><span id="playerArtist">YUKI</span></div><div class="controls"><button class="control" onclick="fakePlay('Previous song')">⏮</button><button id="playButton" class="control play" onclick="togglePlay()">▶</button><button class="control" onclick="fakePlay('Next song')">⏭</button></div></div><div class="progress"><i id="progress"></i></div></div>
+<nav><button class="nav active" data-view="home"><b>⌂</b>Home</button><button class="nav" data-view="searchView"><b>⌕</b>Search</button><button class="nav" data-view="library"><b>▱</b>Library</button></nav>
+<div id="toast" class="toast">▶ Playing…</div>
+</div>
+<script>
+const playerSong=document.getElementById("playerSong"),playButton=document.getElementById("playButton"),progress=document.getElementById("progress"),toast=document.getElementById("toast"),search=document.getElementById("search"),results=document.getElementById("results"),empty=document.getElementById("empty");
+let playing=false,timer=null,pos=0;
+function fakePlay(name){playerSong.textContent=name;playing=true;playButton.textContent="Ⅱ";pos=0;clearInterval(timer);timer=setInterval(()=>{pos=(pos+.45)%100;progress.style.width=pos+"%"},220);toast.textContent="▶  Playing…";toast.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>toast.classList.remove("show"),1300)}
+function togglePlay(){if(playing){playing=false;clearInterval(timer);playButton.textContent="▶";toast.textContent="Ⅱ  Paused"}else fakePlay(playerSong.textContent==="Nothing playing"?"YUKI Mix":playerSong.textContent);if(!playing){toast.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>toast.classList.remove("show"),1000)}}
+document.querySelectorAll(".nav").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.view).classList.add("active")});
+search.onfocus=()=>document.querySelector('[data-view="searchView"]').click();
+const songs=[["Paper Moon","Velvet Arcade","a5","☾"],["Static Hearts","Nova Lane","a2","✧"],["Cloud Nine","June & The Satellites","a6","☁"],["2:17 AM","Silver Hours","a3","✦"],["Midnight Bloom","YUKI Mix","a1","☾"],["Neon Weather","Dream Archive","a2","☁"],["After School","Satellite Club","a3","✦"],["Soft Static","Mellow Youth","a4","〰"]];
+search.oninput=()=>{let q=search.value.trim().toLowerCase();results.innerHTML="";if(!q){empty.style.display="block";empty.textContent="Start typing to search YUKI.";return}empty.style.display="none";let found=songs.filter(s=>(s[0]+" "+s[1]).toLowerCase().includes(q));if(!found.length){empty.textContent="No results. YUKI searched very hard though.";empty.style.display="block";return}found.forEach(s=>{let d=document.createElement("div");d.className="song";d.innerHTML='<div class="song-art '+s[2]+'">'+s[3]+'</div><div class="song-info"><strong>'+s[0]+'</strong><span>'+s[1]+'</span></div><div class="more">•••</div>';d.onclick=()=>fakePlay(s[0]);results.appendChild(d)})};
+</script>
+</body></html>
